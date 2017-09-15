@@ -19,6 +19,12 @@ print(get_jam())
 
 def generate():
     c = []
-    for i in range(50000):
+    for i in range(40000):
         c.append(get_jam())
-    return c
+    d = []
+    for i in range(20000):
+        c.append(get_jam())
+    e = []
+    for i in range(10000):
+        c.append(get_jam())
+    return c, d, e
