@@ -17,6 +17,8 @@ def ReLU(z): return T.maximum(0.0, z)
 from theano.tensor.nnet import sigmoid
 from theano.tensor import tanh
 
+import generator
+
 
 #### Constants
 GPU = False
@@ -31,10 +33,8 @@ else:
         "network3.py to set\nthe GPU flag to True.")
 
 #### Load the MNIST data
-def load_data_shared(filename="../data/mnist.pkl.gz"):
-    f = gzip.open(filename, 'rb')
-    training_data, validation_data, test_data = cPickle.load(f)
-    f.close()
+def load_data_shared():
+    training_data, validation_data, test_data = generator.generate()
     def shared(data):
         """Place the data into shared variables.  This allows Theano to copy
         the data to the GPU, if one is available.
