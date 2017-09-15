@@ -3,7 +3,7 @@ import random
 from src.traffic_jam import TrafficJam
 
 
-def get_jam() :
+def get_jam():
     jam = TrafficJam()
     a = []
     b = []
@@ -14,4 +14,11 @@ def get_jam() :
     b.append(a)
     b.append(round(random.uniform(1, 8), 2))
     return b
+
 print(get_jam())
+
+def generate():
+    c = []
+    for i in range(50000):
+        c.append(get_jam())
+    return c
