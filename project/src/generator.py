@@ -6,6 +6,7 @@ class TrafficJam:
     avg_speed = 0
     reason = 0
     start_time = 0
+    end_time = 0
     def __init__(self):
         self.length = round(random.uniform(1, 15), 2)
         self.avg_speed = round(random.uniform(2.5, 10), 2)
@@ -25,7 +26,6 @@ class Reasons(Enum):
 
 def get_jam() :
     jam = TrafficJam()
-    print(jam)
     a = []
     a.append(jam.length)
     a.append(jam.avg_speed)
