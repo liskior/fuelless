@@ -11,41 +11,6 @@ from theano.tensor.nnet import softmax
 from theano.tensor import shared_randomstreams
 from theano.tensor.signal import pool
 
-# Activation functions for neurons
-def linear(z): return z
-def ReLU(z): return T.maximum(0.0, z)
-from theano.tensor.nnet import sigmoid
-from theano.tensor import tanh
-
-
-#### Constants
-GPU = False
-if GPU:
-    print ("Trying to run under a GPU.  If this is not desired, then modify "+\
-        "network3.py\nto set the GPU flag to False.")
-    try: theano.config.device = 'gpu'
-    except: pass # it's already set
-    theano.config.floatX = 'float32'
-else:
-    print ("Running with a CPU.  If this is not desired, then the modify "+\
-        "network3.py to set\nthe GPU flag to True.")
-
-#### Load the MNIST data
-def load_data_shared(filename="../data/mnist.pkl.gz"):
-    f = gzip.open(filename, 'rb')
-    training_data, validation_data, test_data = cPickle.load(f)
-    f.close()
-    def shared(data):
-        """Place the data into shared variables.  This allows Theano to copy
-        the data to the GPU, if one is available.
-        """
-        shared_x = theano.shared(
-            np.asarray(data[0], dtype=theano.config.floatX), borrow=True)
-        shared_y = theano.shared(
-            np.asarray(data[1], dtype=theano.config.floatX), borrow=True)
-        return shared_x, T.cast(shared_y, "int32")
-    return [shared(training_data), shared(validation_data), shared(test_data)]
-
 #### Main class used to construct and train networks
 class Network(object):
 
@@ -148,75 +113,6 @@ class Network(object):
             best_validation_accuracy, best_iteration))
         print("Corresponding test accuracy of {0:.2%}".format(test_accuracy))
 
-
-
-class FullyConnectedLayer(object):
-
-    def __init__(self, n_in, n_out, activation_fn=sigmoid, p_dropout=0.0):
-        self.n_in = n_in
-        self.n_out = n_out
-        self.activation_fn = activation_fn
-        self.p_dropout = p_dropout
-        # Initialize weights and biases
-        self.w = theano.shared(
-            np.asarray(
-                np.random.normal(
-                    loc=0.0, scale=np.sqrt(1.0/n_out), size=(n_in, n_out)),
-                dtype=theano.config.floatX),
-            name='w', borrow=True)
-        self.b = theano.shared(
-            np.asarray(np.random.normal(loc=0.0, scale=1.0, size=(n_out,)),
-                       dtype=theano.config.floatX),
-            name='b', borrow=True)
-        self.params = [self.w, self.b]
-
-    def set_inpt(self, inpt, inpt_dropout, mini_batch_size):
-        self.inpt = inpt.reshape((mini_batch_size, self.n_in))
-        self.output = self.activation_fn(
-            (1-self.p_dropout)*T.dot(self.inpt, self.w) + self.b)
-        self.y_out = T.argmax(self.output, axis=1)
-        self.inpt_dropout = dropout_layer(
-            inpt_dropout.reshape((mini_batch_size, self.n_in)), self.p_dropout)
-        self.output_dropout = self.activation_fn(
-            T.dot(self.inpt_dropout, self.w) + self.b)
-
-    def accuracy(self, y):
-        "Return the accuracy for the mini-batch."
-        return T.mean(T.eq(y, self.y_out))
-
-class SoftmaxLayer(object):
-
-    def __init__(self, n_in, n_out, p_dropout=0.0):
-        self.n_in = n_in
-        self.n_out = n_out
-        self.p_dropout = p_dropout
-        # Initialize weights and biases
-        self.w = theano.shared(
-            np.zeros((n_in, n_out), dtype=theano.config.floatX),
-            name='w', borrow=True)
-        self.b = theano.shared(
-            np.zeros((n_out,), dtype=theano.config.floatX),
-            name='b', borrow=True)
-        self.params = [self.w, self.b]
-
-    def set_inpt(self, inpt, inpt_dropout, mini_batch_size):
-        self.inpt = inpt.reshape((mini_batch_size, self.n_in))
-        self.output = softmax((1-self.p_dropout)*T.dot(self.inpt, self.w) + self.b)
-        self.y_out = T.argmax(self.output, axis=1)
-        self.inpt_dropout = dropout_layer(
-            inpt_dropout.reshape((mini_batch_size, self.n_in)), self.p_dropout)
-        self.output_dropout = softmax(T.dot(self.inpt_dropout, self.w) + self.b)
-
-    def cost(self, net):
-        "Return the log-likelihood cost."
-        return -T.mean(T.log(self.output_dropout)[T.arange(net.y.shape[0]), net.y])
-
-    def accuracy(self, y):
-        "Return the accuracy for the mini-batch."
-        return T.mean(T.eq(y, self.y_out))
-
-
-#### Miscellanea
 def size(data):
     "Return the size of the dataset `data`."
     return data[0].get_value(borrow=True).shape[0]
