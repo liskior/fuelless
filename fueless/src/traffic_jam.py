@@ -8,11 +8,6 @@ class Reasons(Enum):
 
 
 class TrafficJam:
-    length = 0
-    avg_speed = 0
-    reason = 0
-    start_time = 0
-    end_time = 0
     def __init__(self):
         self.length = round(random.uniform(1, 15), 2)
         self.avg_speed = round(random.uniform(2.5, 10), 2)
