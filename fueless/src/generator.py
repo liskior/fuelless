@@ -11,21 +11,19 @@ def get_jam():
     jam.reason = random.choice(list(Reasons))
     jam.start_time = round(random.uniform(1, 15), 2)
     a = np.array([jam.length, jam.avg_speed, jam.reason, jam.start_time])
-    b = np.array([a, round(random.uniform(1, 8), 2)])
-    return b
+    return (a, round(random.uniform(1, 8), 2))
 
 print(get_jam())
 
 
 def generate():
-    training_data = np.array(get_jam())
+    training_data = []
     for i in range(40000):
-        np.concatenate((training_data, np.array(get_jam())))
-    validation_data = np.array(get_jam())
+        training_data.append(get_jam())
+    validation_data = []
     for i in range(20000):
-        np.concatenate((validation_data, np.array(get_jam())))
-    test_data = np.array(get_jam())
+        validation_data.append(get_jam())
+    test_data = []
     for i in range(10000):
-        np.concatenate((test_data, np.array(get_jam())))
+        test_data.append(get_jam())
     return training_data, validation_data, test_data
-generate()
