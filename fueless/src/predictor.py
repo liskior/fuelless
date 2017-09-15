@@ -70,6 +70,8 @@ class Network(object):
 
     def SGD(self, training_data, epochs, mini_batch_size, eta,
             validation_data, test_data, lmbda=0.0):
+        print("rrrrrrrrrrrrrrrr")
+        print(training_data)
         """Train the network using mini-batch stochastic gradient descent."""
         training_x, training_y = training_data
         validation_x, validation_y = validation_data
