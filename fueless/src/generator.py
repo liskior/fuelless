@@ -19,6 +19,7 @@ def get_jam():
 print(get_jam())
 
 def generate():
+<<<<<<< HEAD
     c = np.array()
     for i in range(40000):
         c.append(get_jam())
@@ -26,6 +27,15 @@ def generate():
     for i in range(20000):
         c.append(get_jam())
     e = np.array()
+=======
+    training_data = []
+    for i in range(40000):
+        training_data.append(get_jam())
+    validation_data = []
+    for i in range(20000):
+        validation_data.append(get_jam())
+    test_data = []
+>>>>>>> 74bf7d399231d4028357c7f6a9e9e5700af9e18a
     for i in range(10000):
-        c.append(get_jam())
-    return c, d, e
+        test_data.append(get_jam())
+    return training_data, validation_data, test_data
