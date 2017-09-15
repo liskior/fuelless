@@ -7,6 +7,7 @@ class Reasons(Enum):
 
 
 class TrafficJam:
+    start = 0
     length = 0
     avg_speed = 0
     reason = 0
@@ -16,3 +17,7 @@ class TrafficJam:
                '[Average speed: %s]' % (self.avg_speed) +\
                '[Reason: %s]' % (self.reason) + \
                '[Start time: %s]' % (self.start_time)
+
+    def overlaps(self, other):
+        return (self.start > other.start and self.start < other.start + other.length) \
+               or (other.start > self.start and other.start < self.start + self.length)
