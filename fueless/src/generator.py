@@ -1,12 +1,13 @@
 import random
 
 from src.traffic_jam import TrafficJam
+import numpy as np
 
 
 def get_jam():
     jam = TrafficJam()
-    a = []
-    b = []
+    a = np.array()
+    b = np.array()
     a.append(jam.length)
     a.append(jam.avg_speed)
     a.append(jam.reason)
@@ -18,13 +19,13 @@ def get_jam():
 print(get_jam())
 
 def generate():
-    c = []
+    c = np.array()
     for i in range(40000):
         c.append(get_jam())
-    d = []
+    d = np.array()
     for i in range(20000):
         c.append(get_jam())
-    e = []
+    e = np.array()
     for i in range(10000):
         c.append(get_jam())
     return c, d, e
