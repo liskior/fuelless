@@ -5,12 +5,10 @@ import numpy as np
 
 from jam_simulator import Jam_Simulator
 
-
-def optimize():
-    avg_speed = 130
+def optimize(avg_speed=130, length = 1055):
     jams = Jam_Simulator()
     segmenter = Segmenter()
-    segmenter = segmenter.get_segmented_route(1055, jams.generate_traffic_jams(route_length=1055))
+    segmenter = segmenter.get_segmented_route(length, jams.generate_traffic_jams(route_length=length))
     predictor = Predictor()
 
     print(segmenter)
@@ -21,27 +19,38 @@ def optimize():
             jam = segment.jam_info
             jam.number = segment.number
             jams.append(jam)
-            jam.end = predictor.predict(np.array([jam.length, jam.avg_speed, jam.reason, jam.start_time]).reshape((1, 4)))[0][0]
-            print(jam.end)
+            jam.end = round(predictor.predict(np.array([jam.length, jam.avg_speed, jam.reason,
+                                                        jam.start_time]).reshape((1, 4)))[0][0], 2)
             print(segment.number)
             print("******")
 
     for jam in reversed(jams):
-        strecke = 0
+        strecke = segmenter[jam.number].start
+        avg_speed = min(avg_speed, round(strecke / jam.end, 2))
+        if avg_speed < 40:
+            return "roads are bad. stay at home."
         for i in range(jam.number):
-            if not segmenter[i].jam_info:
-                strecke += segmenter[i].length
-        for i in range(jam.number, len(segmenter)):
-            segmenter[i].avg_speed = avg_speed
-        avg_speed = min(130, strecke / jam.end)
+            (segmenter[i]).avg_speed = avg_speed
 
 
-
+    time = 0
+    benzin = 0
+    strom = 0
     for segment in segmenter:
-        print(segment.length)
+        print(segment.number)
+        print(round(segment.length, 2))
         print(segment.avg_speed)
-        print(segment.__str__())
         print()
+        time += segment.length / segment.avg_speed
+        benzin += (3.4 + 0.00966667 * segment.avg_speed - 0.00024 * (segment.avg_speed**2) \
+                  + 2.53333*(10**(-6))*(segment.avg_speed**3)) * (segment.length * 0.01)
+        strom += (-1.1 + 0.06*segment.avg_speed - 0.00025*(segment.avg_speed**2)) * (segment.length * 0.01)
+
+    print("time:")
+    print(round(time, 2))
+    print("benzin")
+    print(round(benzin, 2))
+    print("strom")
+    print(round(strom, 2))
 
 
-optimize()
