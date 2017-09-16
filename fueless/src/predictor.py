@@ -25,7 +25,7 @@ class Predictor:
         # Compile model
         self.model.compile(loss='binary_crossentropy', optimizer='sgd', metrics=['accuracy'])
         # Fit the model
-        self.model.fit(X, Y, nb_epoch=5, batch_size=10, verbose=2)
+        self.model.fit(X, Y, nb_epoch=1, batch_size=10, verbose=2)
         # calculate predictions
         #predictions = self.model.predict(X)
         #print(self.model.predict(numpy.random.rand(1, 4)))

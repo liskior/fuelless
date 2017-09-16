@@ -8,7 +8,7 @@ from optimizer import optimize
 
 def main():
     predictor = Predictor()
-    optimize()
+    print(optimize())
 
 
 if __name__ == "__main__":

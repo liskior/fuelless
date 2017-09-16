@@ -25,10 +25,14 @@ def optimize(avg_speed=130, length = 1055):
             print("******")
 
     for jam in reversed(jams):
+
         strecke = segmenter[jam.number].start
+
         avg_speed = min(avg_speed, round(strecke / jam.end, 2))
+
         if avg_speed < 40:
             return "roads are bad. stay at home."
+
         for i in range(jam.number):
             (segmenter[i]).avg_speed = avg_speed
 
@@ -36,15 +40,21 @@ def optimize(avg_speed=130, length = 1055):
     time = 0
     benzin = 0
     strom = 0
+
+    stri = str()
+
     for segment in segmenter:
         print(segment.number)
         print(round(segment.length, 2))
         print(segment.avg_speed)
         print()
+
+        stri += "['" + str(segment.length) + "', " + str(segment.avg_speed) + "]\n"
         time += segment.length / segment.avg_speed
         benzin += (3.4 + 0.00966667 * segment.avg_speed - 0.00024 * (segment.avg_speed**2) \
                   + 2.53333*(10**(-6))*(segment.avg_speed**3)) * (segment.length * 0.01)
         strom += (-1.1 + 0.06*segment.avg_speed - 0.00025*(segment.avg_speed**2)) * (segment.length * 0.01)
+
 
     print("time:")
     print(round(time, 2))
@@ -52,5 +62,10 @@ def optimize(avg_speed=130, length = 1055):
     print(round(benzin, 2))
     print("strom")
     print(round(strom, 2))
-
+    stri += str(round(time, 2)) + "\n"
+    stri += str(round(benzin, 2)) + "\n"
+    stri += str(round(strom, 2)) + "\n"
+    f = open("../templates/tmp", "w")
+    f.write(stri)
+    f.close()
 
