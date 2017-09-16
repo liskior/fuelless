@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" type="text/css"/>
     <link rel="stylesheet" href="css/style.css" type="text/css"/>
     <script>
+        var allText = ""
         function readFile(object) {
             var file = object.files[0]
             var reader = new FileReader()
@@ -14,6 +15,25 @@
                 document.getElementById('out').innerHTML = reader.result
             }
             reader.readAsText(file)
+        }
+        function readTextFile(file)
+        {
+            var rawFile = new XMLHttpRequest();
+            rawFile.open("GET", file, false);
+            rawFile.onreadystatechange = function ()
+            {
+                if(rawFile.readyState === 4)
+                {
+                    if(rawFile.status === 200 || rawFile.status == 0)
+                    {
+                        allText = rawFile.responseText;
+                        console.log(allText)
+
+                    }
+                }
+            }
+            rawFile.send(null);
+            return allText;
         }
     </script>
     <style>
@@ -255,7 +275,8 @@
       google.charts.setOnLoadCallback(drawChart);
 
       function drawChart() {
-        var data = google.visualization.arrayToDataTable(readFile(document.getElementById('templates/tmp')));
+        var data = google.visualization.arrayToDataTable(allText);
+
 
 
 

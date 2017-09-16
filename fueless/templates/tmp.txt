@@ -1,0 +1,7 @@
+[
+    ['Director (Year)',  'Rotten Tomatoes'],
+    ['524', 8.4],
+    ['Ralph Thomas (1959)',     6.9],
+    ['Don Sharp (1978)',        6.5],
+    ['James Hawes (2008)',      4.4]
+]
