@@ -21,7 +21,7 @@ class Predictor:
         # create model
         self.model = Sequential()
         self.model.add(Dense(3, input_dim=4, init='uniform', activation='relu'))
-        self.model.add(Dense(1, input_dim=3, init='uniform', activation='relu'))
+        self.model.add(Dense(12, input_dim=4, init='uniform', activation='relu'))
         # Compile model
         self.model.compile(loss='binary_crossentropy', optimizer='sgd', metrics=['accuracy'])
         # Fit the model
