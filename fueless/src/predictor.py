@@ -29,12 +29,13 @@ class Predictor:
         # calculate predictions
         predictions = self.model.predict(X)
         print(self.model.predict(numpy.random.rand(1, 4)))
+        print(self.predict(numpy.random.rand(1, 4)))
         # round predictions
         rounded = [round(x[0]) for x in predictions]
         print(rounded)
 
     def predict(self, traffic_jam):
-        self.model.predict(traffic_jam)
+        return self.model.predict(traffic_jam)
 
 
 

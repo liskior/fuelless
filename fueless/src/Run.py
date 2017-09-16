@@ -8,8 +8,7 @@ def main():
 
 
     #for testing
-    predictor.predict(numpy.random.rand(1,4))
-
+    print(predictor.predict(traffic_jam=numpy.random.rand(1,4)))
 
 
 if __name__ == "__main__":
