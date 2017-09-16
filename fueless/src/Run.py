@@ -2,13 +2,12 @@
 from predictor import Predictor
 import numpy
 
+from optimizer import optimize
+
 
 def main():
     predictor = Predictor()
-
-
-    #for testing
-    print(predictor.predict(traffic_jam=numpy.random.rand(1,4)))
+    optimize()
 
 
 if __name__ == "__main__":

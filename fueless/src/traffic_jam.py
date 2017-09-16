@@ -12,6 +12,11 @@ class TrafficJam:
     avg_speed = 0
     reason = 0
     start_time = 0
+    number = 0
+    end = 0
+    def __init__(self, length = 0, number = 0):
+        self.length = length
+
     def __str__(self):
         return '[Length: %s]' % (self.length) + \
                '[Average speed: %s]' % (self.avg_speed) +\
