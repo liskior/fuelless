@@ -163,8 +163,8 @@
               <canvas id="canvas"></canvas>
             </div>
             <div class="col-lg-3 white">
-              <p><input type="text" value="The Price: blablabla Euro"></p>
-              <p><input type="text" value="The trip time: blablabla Hours"></p>
+              <p><input type="text" id="price" value="The Price: 50 Euro"></p>
+              <p><input type="text" id="" value="The trip time: 6,25 Hours"></p>
               <input type="button" onclick="drawChart()" value="Calculate" id="calculate" class="btn btn-success">
             </div>
         </div>
@@ -174,9 +174,6 @@
   <div id="chart_div" style="width: 900px; height: 500px;"></div>
 
     <script>
-      // This example requires the Places library. Include the libraries=places
-      // parameter when you first load the API. For example:
-      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
       function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
@@ -288,7 +285,7 @@
   findDistanceFromAddresses(startLoc, endLoc);
 }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNXgv5FOJwezx82SckICUFonAXREGPzDY&libraries=places&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?language=en&key=AIzaSyBNXgv5FOJwezx82SckICUFonAXREGPzDY&libraries=places&callback=initMap"
         async defer></script>
 
 
@@ -355,9 +352,16 @@ ctx.moveTo(50, 0);
 ctx.moveTo(200,65);
 ctx.lineTo(200,5825);
 ctx.stroke();
+<<<<<<< HEAD
 f =document.getElementById(f)
       readFile("tmp.txt")
       f.innerText=event.target.result
+=======
+
+document.addEventListener("mousemove", function() {
+
+});
+>>>>>>> df469e87c57198397741cbb2f5bf79025a06f797
     </script>
 
   <div id="f">
