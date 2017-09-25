@@ -23,14 +23,14 @@ def get_jam(length = 0, number = 0):
 
 def generate():
     training_data = get_jam()
-    for i in range(40):
+    for i in range(400):
         training_data = np.concatenate([training_data, get_jam()])
 
     validation_data = get_jam()
-    for i in range(20):
+    for i in range(200):
         validation_data = np.concatenate([validation_data, get_jam()])
     test_data = get_jam()
-    for i in range(10):
+    for i in range(100):
         test_data = np.concatenate([test_data, get_jam()])
 
     return training_data, validation_data, test_data

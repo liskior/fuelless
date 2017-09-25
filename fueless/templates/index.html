@@ -7,34 +7,57 @@
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" type="text/css"/>
     <link rel="stylesheet" href="css/style.css" type="text/css"/>
     <script>
-        var allText = ""
-        function readFile(object) {
-            var file = object.files[0]
-            var reader = new FileReader()
-            reader.onload = function() {
-                document.getElementById('out').innerHTML = reader.result
-            }
-            reader.readAsText(file)
-        }
-        function readTextFile(file)
-        {
-            var rawFile = new XMLHttpRequest();
-            rawFile.open("GET", file, false);
-            rawFile.onreadystatechange = function ()
-            {
-                if(rawFile.readyState === 4)
-                {
-                    if(rawFile.status === 200 || rawFile.status == 0)
-                    {
-                        allText = rawFile.responseText;
-                        console.log(allText)
 
-                    }
+        function getXmlHttp() {
+
+            var xmlhttp;
+
+            try {
+
+                xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+
+            } catch (e) {
+                06
+                try {
+                    07
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                    08
+                } catch (E) {
+                    09
+                    xmlhttp = false;
+                    10
                 }
+                11
             }
-            rawFile.send(null);
-            return allText;
+            12
+            if (!xmlhttp && typeof XMLHttpRequest != 'undefined') {
+                13
+                xmlhttp = new XMLHttpRequest();
+                14
+            }
+            return xmlhttp;
+
         }
+
+        (function() {
+            19
+            var xmlhttp = getXmlHttp();
+            20
+            xmlhttp.open('GET', 'tmp.txt', false);
+            21
+            xmlhttp.send(null);
+            22
+            if (xmlhttp.status == 200) {
+                23
+                var response = xmlhttp.responseText;
+                24
+                alert(response);
+                25
+            }
+            26
+        })();
+
+        reader.readAsText(file);
     </script>
     <style>
       #bg-wrapper-header {
@@ -275,7 +298,7 @@
       google.charts.setOnLoadCallback(drawChart);
 
       function drawChart() {
-        var data = google.visualization.arrayToDataTable(allText);
+        var data = google.visualization.arrayToDataTable(readFile(tmp.txt));
 
 
 
@@ -332,6 +355,14 @@ ctx.moveTo(50, 0);
 ctx.moveTo(200,65);
 ctx.lineTo(200,5825);
 ctx.stroke();
+f =document.getElementById(f)
+      readFile("tmp.txt")
+      f.innerText=event.target.result
     </script>
+
+  <div id="f">
+
+
+  </div>
   </body>
 </html>
